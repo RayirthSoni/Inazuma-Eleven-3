@@ -12,7 +12,6 @@ import os
 import json
 from bs4 import BeautifulSoup
 import requests
-
 import sys
 
 # Get the directory where the current script is located
@@ -21,12 +20,10 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
 # Get the parent directory
 parent_dir = os.path.dirname(current_dir)
 
-
 sys.path.append(parent_dir)
 
 from constants.constants import Constants
 from utils.data_scraping import get_team_names, get_player_stats_info
-
 
 INAZUMA_ELEVEN3_WEB_FEATURES = Constants.INAZUMA_ELEVEN3_WEB_FEATURES
 WEB_INAZUMA_URL = Constants.Scripts.WEB_INAZUMA_ELEVEN_URL
@@ -42,8 +39,9 @@ soup = BeautifulSoup(html_content, "lxml")
 
 # All Teams
 team_names = get_team_names(soup=soup, class_="menu")
-json_team_names = json.dumps(team_names, indent=4, default=str)
-json.dump(team_names, open(TEAM_NAMES_DATA, "w"), indent=4)
+json_team_names = json.dumps(team_names, indent=4, ensure_ascii=False)
+with open(TEAM_NAMES_DATA, "w", encoding="utf-8") as f:
+    f.write(json_team_names)
 
 # Player Stats Data
 player_stats_dict = {}
@@ -55,8 +53,10 @@ player_stats_dict = {header: [] for header in headers}
 
 # All Player Stats Tables Present on Website
 player_stats_table = soup.find_all("table", class_=None)
-player_stats_dict = get_player_stats_info(player_stats_dict=player_stats_dict, player_stats_table=player_stats_table, headers=headers,)
-json_player_stats = json.dumps(player_stats_dict, indent=4, default=str)
-json.dump(player_stats_dict, open(TEAM_STATS_DATA, "w"), indent=4)
+player_stats_dict = get_player_stats_info(player_stats_dict=player_stats_dict, player_stats_table=player_stats_table, headers=headers)
+
+json_player_stats = json.dumps(player_stats_dict, indent=4, ensure_ascii=False)
+with open(TEAM_STATS_DATA, "w", encoding="utf-8") as f:
+    f.write(json_player_stats)
 
 # Friendly Matches Data
