@@ -7,6 +7,10 @@ This module contains constants that have been used in entire codebase
 # Ignore pylint warngings
 # pylint: disable=line-too-long
 
+import os
+
+CURRENT_WORKING_DIRECTORY = os.getcwd()
+PARENT_DIRECTORY = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 class Constants:
     """constants configurations"""
@@ -38,6 +42,5 @@ class Constants:
     class Data:
         """data constants"""
 
-        TEAM_NAMES_DATA = r"INAZUMA-ELEVEN-3/data/team_names.json"
-        TEAM_STATS_DATA = r"INAZUMA-ELEVEN-3/data/player_stats.json"
-
+        TEAM_NAMES_DATA = os.path.join(PARENT_DIRECTORY,'data','team_names.json')
+        TEAM_STATS_DATA = os.path.join(PARENT_DIRECTORY,'data','player_stats.json')

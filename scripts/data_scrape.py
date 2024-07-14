@@ -48,14 +48,14 @@ player_stats_dict = {}
 player_stats_table = soup.find("table", class_=None)
 
 # Header Columns present in table to store to json
-headers = [cell.get_text(strip=True) for cell in soup.find("table", class_=None).find("tr").find_all("td")]
+headers = ["Team"] + [cell.get_text(strip=True) for cell in soup.find("table", class_=None).find("tr").find_all("td")]
 player_stats_dict = {header: [] for header in headers}
 
 # All Player Stats Tables Present on Website
-player_stats_table = soup.find_all("table", class_=None)
-player_stats_dict = get_player_stats_info(player_stats_dict=player_stats_dict, player_stats_table=player_stats_table, headers=headers)
+player_stats_dict = get_player_stats_info(soup=soup, player_stats_dict=player_stats_dict, headers=headers)
 
 json_player_stats = json.dumps(player_stats_dict, indent=4, ensure_ascii=False)
+
 with open(TEAM_STATS_DATA, "w", encoding="utf-8") as f:
     f.write(json_player_stats)
 

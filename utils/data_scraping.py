@@ -18,14 +18,19 @@ def get_team_names(**kwargs):
 
 
 def get_player_stats_info(**kwargs):
+    soup = kwargs.get("soup")
     player_stats_dict = kwargs.get("player_stats_dict", {})
-    player_stats_table = kwargs.get("player_stats_table")
     headers = kwargs.get("headers")
 
-    for table in player_stats_table:
-        for row in table.find_all("tr")[1:]:
-            for idx, cell in enumerate(row.find_all("td")):
-                header = headers[idx]
-                player_stats_dict[header].append(cell.get_text(strip=True))
+    current_team = ""
+    for element in soup.find_all(['h1', 'table']):
+        if element.name == 'h1':
+            current_team = element.get_text(strip=True)
+        elif element.name == 'table' and element.get('class') is None:
+            for row in element.find_all('tr')[1:]:
+                player_stats_dict['Team'].append(current_team)
+                for idx, cell in enumerate(row.find_all('td')):
+                    header = headers[idx + 1]  # Adjust index for 'Team' header
+                    player_stats_dict[header].append(cell.get_text(strip=True))
 
     return player_stats_dict
