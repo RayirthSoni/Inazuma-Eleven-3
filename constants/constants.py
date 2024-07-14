@@ -35,3 +35,9 @@ class Constants:
         # WEB_HOME_URL = "http://watashiwa7.altervista.org/ie/index.html"
         WEB_INAZUMA_ELEVEN_URL = "http://watashiwa7.altervista.org/ie/{}.htm"
 
+    class Data:
+        """data constants"""
+
+        TEAM_NAMES_DATA = r"INAZUMA-ELEVEN-3/data/team_names.json"
+        TEAM_STATS_DATA = r"INAZUMA-ELEVEN-3/data/player_stats.json"
+

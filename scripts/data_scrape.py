@@ -13,7 +13,16 @@ import json
 from bs4 import BeautifulSoup
 import requests
 
-os.chdir("..")
+import sys
+
+# Get the directory where the current script is located
+current_dir = os.path.dirname(os.path.abspath(__file__))
+
+# Get the parent directory
+parent_dir = os.path.dirname(current_dir)
+
+
+sys.path.append(parent_dir)
 
 from constants.constants import Constants
 from utils.data_scraping import get_team_names, get_player_stats_info
@@ -23,8 +32,8 @@ INAZUMA_ELEVEN3_WEB_FEATURES = Constants.INAZUMA_ELEVEN3_WEB_FEATURES
 WEB_INAZUMA_URL = Constants.Scripts.WEB_INAZUMA_ELEVEN_URL
 PLAYER_STATS_WEBSITE = WEB_INAZUMA_URL.format(INAZUMA_ELEVEN3_WEB_FEATURES["level_99_stats"])
 FRIENDLY_MATCHES_WEBSITE = WEB_INAZUMA_URL.format(INAZUMA_ELEVEN3_WEB_FEATURES["friendly_matches"])
-TEAM_NAMES_DATA = "data/team_names.json"
-TEAM_STATS_DATA = "data/player_stats.json"
+TEAM_NAMES_DATA = Constants.Data.TEAM_NAMES_DATA
+TEAM_STATS_DATA = Constants.Data.TEAM_STATS_DATA
 
 
 player_stats_response = requests.get(PLAYER_STATS_WEBSITE)
