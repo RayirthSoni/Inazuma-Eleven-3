@@ -6,3 +6,6 @@
 
 # Directory
 local_testing/*
+
+# Byte code
+__pycache__
