@@ -2,4 +2,7 @@
 *.xlsx
 *.csv
 *.json
-!data/**
+!data/*
+
+# Directory
+local_testing/*
